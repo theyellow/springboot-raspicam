@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
 import com.hopding.jrpicam.RPiCamera;
@@ -19,14 +21,22 @@ import uk.co.caprica.picam.enums.Encoding;
 @Controller
 public class CameraController {
 
+	private final Logger logger = LoggerFactory.getLogger(CameraController.class);
+
 	private final CameraConfiguration configuration;
 
-	private Semaphore cameraUse = new Semaphore(0);
+	private final Semaphore cameraUse = new Semaphore(1);
 
-	public CameraController() throws NativeLibraryException {
+	public CameraController() {
 		Environment.dumpEnvironment();
 
-		System.out.printf("Installed native library to %s%n%n", PicamNativeLibrary.installTempLibrary());
+		try {
+			System.out.printf("Installed native library to %s%n%n", PicamNativeLibrary.installTempLibrary());
+		} catch (NativeLibraryException e) {
+			// TODO Auto-generated catch block
+			logger.error("Not native running, failed to install library for cam", e);
+			e.printStackTrace();
+		}
 
 		configuration = CameraConfiguration.cameraConfiguration();
 		defaultConfiguration(640, 480);
@@ -35,7 +45,7 @@ public class CameraController {
 	public CameraConfiguration configuration() {
 		return configuration;
 	}
-	
+
 	public CameraConfiguration defaultConfiguration(Integer width, Integer height) {
 // 		@formatter:off
 		return configuration()
@@ -64,7 +74,7 @@ public class CameraController {
 	        ;
 // 		@formatter:on
 	}
-	
+
 	public File recordVideo() throws FailedToRunRaspistillException, IOException, InterruptedException {
 		boolean acquired = cameraUse.tryAcquire(10, TimeUnit.SECONDS);
 		if (acquired) {
@@ -88,7 +98,7 @@ public class CameraController {
 	}
 
 	public boolean stopPictureTaker() {
-		
+
 		return false;
 	}
 

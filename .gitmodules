@@ -1,0 +1,3 @@
+[submodule "jrpicam"]
+	path = jrpicam
+	url = https://github.com/theyellow/jrpicam.git

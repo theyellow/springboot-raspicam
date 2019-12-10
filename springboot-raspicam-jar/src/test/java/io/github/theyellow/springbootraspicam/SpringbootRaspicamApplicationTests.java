@@ -8,6 +8,7 @@ class SpringbootRaspicamApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Test");
 	}
 
 }

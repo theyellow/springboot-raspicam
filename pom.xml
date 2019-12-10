@@ -19,7 +19,7 @@
 	</properties>
 
 	<modules>
-		<module>../jrpicam</module>
+		<module>jrpicam</module>
 		<module>springboot-raspicam-jar</module>
 	</modules>
 
