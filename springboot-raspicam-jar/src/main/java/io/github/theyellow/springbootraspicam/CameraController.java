@@ -17,13 +17,13 @@ import uk.co.caprica.picam.app.Environment;
 import uk.co.caprica.picam.enums.Encoding;
 
 @Controller
-public class CameraApplication {
+public class CameraController {
 
 	private final CameraConfiguration configuration;
 
 	private Semaphore cameraUse = new Semaphore(0);
 
-	public CameraApplication() throws NativeLibraryException {
+	public CameraController() throws NativeLibraryException {
 		Environment.dumpEnvironment();
 
 		System.out.printf("Installed native library to %s%n%n", PicamNativeLibrary.installTempLibrary());
