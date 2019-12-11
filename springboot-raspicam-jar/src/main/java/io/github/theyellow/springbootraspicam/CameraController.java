@@ -41,9 +41,7 @@ public class CameraController {
 		try {
 			System.out.printf("Installed native library to %s%n%n", PicamNativeLibrary.installTempLibrary());
 		} catch (NativeLibraryException e) {
-			// TODO Auto-generated catch block
 			logger.error("Not native running, failed to install library for cam", e);
-			e.printStackTrace();
 		}
 
 		configuration = CameraConfiguration.cameraConfiguration();
