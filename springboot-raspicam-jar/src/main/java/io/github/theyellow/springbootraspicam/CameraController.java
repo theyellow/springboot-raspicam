@@ -190,7 +190,7 @@ public class CameraController {
 			cameraUse.release();
 			logger.info("Shot photo '{}' with following parameters {}", picture, width, height, quality, encoding);
 		} else {
-			logger.error("Could not acquire camera for taking picture within {} seconds, returning null");
+			logger.error("Could not acquire camera for taking picture within {} seconds, returning null", timeout);
 		}
 		return picture;
 	}
