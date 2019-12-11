@@ -50,41 +50,9 @@
 
 	<build>
 		<plugins>
-		<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<compilerArgument>-proc:none</compilerArgument>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<inherited>false</inherited>
-				<configuration>
-					<!-- <escapeString>\</escapeString> -->
-					<!-- <outputDirectory>${basedir}/target</outputDirectory> -->
-					<!-- <resources> -->
-					<!-- <resource> -->
-					<!-- <directory>${basedir}</directory> -->
-					<!-- <include>bintray-descriptor.json</include> -->
-					<!-- <filtering>true</filtering> -->
-					<!-- </resource> -->
-					<!-- </resources> -->
-					<!-- <nonFilteredFileExtensions> -->
-					<!-- <nonFilteredFileExtension>json</nonFilteredFileExtension> -->
-					<!-- </nonFilteredFileExtensions> -->
-				</configuration>
-			</plugin>
-			
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId><configuration></configuration>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
