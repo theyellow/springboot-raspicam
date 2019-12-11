@@ -30,7 +30,7 @@
 	</build>
 
 	<scm>
-		<developerConnection>scm:git:ssh://github.com/theyellow/springboot-raspicam.git</developerConnection>
+		<developerConnection>scm:git:git@github.com:theyellow/springboot-raspicam.git</developerConnection>
 	</scm>
 
 </project>
