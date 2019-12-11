@@ -180,10 +180,7 @@ public class CameraController {
 		boolean acquiredCamera = cameraUse.tryAcquire(timeout, TimeUnit.SECONDS);
 		if (acquiredCamera) {
 			try (Camera camera = new Camera(configuration())) {
-				if (camera.open()) {
-					picture = camera.takePicture(pictureCaptureHandler);
-					camera.close();
-				}
+				picture = camera.takePicture(pictureCaptureHandler);
 			} catch (CameraException e) {
 				logger.error("Could not get camera for takePicture(...), exception was thrown", e);
 			}
