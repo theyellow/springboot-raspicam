@@ -165,7 +165,7 @@ public class CameraController {
 
 	public <T> T takePicture(Integer width, Integer height, Integer quality, long timeout, Encoding encoding,
 			PictureCaptureHandler<T> pictureCaptureHandler)
-			throws CameraException, CaptureFailedException, InterruptedException {
+			throws CaptureFailedException, InterruptedException {
 		T picture = null;
 
 		// @formatter:off
@@ -179,10 +179,13 @@ public class CameraController {
 
 		boolean acquiredCamera = cameraUse.tryAcquire(timeout, TimeUnit.SECONDS);
 		if (acquiredCamera) {
-			Camera camera = new Camera(configuration());
-			if (camera.open()) {
-				picture = camera.takePicture(pictureCaptureHandler);
-				camera.close();
+			try (Camera camera = new Camera(configuration())) {
+				if (camera.open()) {
+					picture = camera.takePicture(pictureCaptureHandler);
+					camera.close();
+				}
+			} catch (CameraException e) {
+				logger.error("Could not get camera for takePicture(...)", e);
 			}
 			cameraUse.release();
 			logger.info("Shot photo '{}' with following parameters {}", picture, width, height, quality, encoding);
@@ -194,7 +197,7 @@ public class CameraController {
 
 	public <T> T takePicture(Integer width, Integer height, Integer quality, long timeout,
 			PictureCaptureHandler<T> pictureCaptureHandler)
-			throws CameraException, CaptureFailedException, InterruptedException {
+			throws CaptureFailedException, InterruptedException {
 		if (!DEFAULT_PICTURE_ENCODING.equals(configuration.encoding())) {
 			logger.warn("changing camera to default encoding, it was {}", configuration.encoding());
 		}
@@ -203,14 +206,14 @@ public class CameraController {
 	}
 
 	public File takePicture(String name, Integer width, Integer height, Integer quality, long timeout,
-			Encoding encoding) throws CameraException, CaptureFailedException, InterruptedException {
+			Encoding encoding) throws CaptureFailedException, InterruptedException {
 		File file = new File(name);
 		PictureCaptureHandler<File> pictureCaptureHandler = new FilePictureCaptureHandler(file);
 		return takePicture(width, height, quality, timeout, encoding, pictureCaptureHandler);
 	}
 
 	public File takePicture(String name, Integer width, Integer height, Integer quality, long timeout)
-			throws CameraException, CaptureFailedException, InterruptedException {
+			throws CaptureFailedException, InterruptedException {
 		if (!DEFAULT_PICTURE_ENCODING.equals(configuration.encoding())) {
 			logger.warn("changing camera to default encoding, it was {}", configuration.encoding());
 		}
@@ -218,12 +221,12 @@ public class CameraController {
 	}
 
 	public File takePicture(String name, Integer width, Integer height, Integer quality, Encoding encoding)
-			throws CameraException, CaptureFailedException, InterruptedException {
+			throws CaptureFailedException, InterruptedException {
 		return takePicture(name, width, height, quality, DEFAULT_PICTURE_TIMEOUT_IN_MILLIS, encoding);
 	}
 
 	public File takePicture(String name, Integer width, Integer height, Integer quality)
-			throws CameraException, CaptureFailedException, InterruptedException {
+			throws CaptureFailedException, InterruptedException {
 		if (!DEFAULT_PICTURE_ENCODING.equals(configuration.encoding())) {
 			logger.warn("changing camera to default encoding, it was {}", configuration.encoding());
 		}
@@ -231,30 +234,30 @@ public class CameraController {
 	}
 
 	public File takePicture(String name, Integer width, Integer height, Encoding encoding)
-			throws CameraException, CaptureFailedException, InterruptedException {
+			throws CaptureFailedException, InterruptedException {
 		return takePicture(name, width, height, DEFAULT_PICTURE_QUALITY, DEFAULT_PICTURE_TIMEOUT_IN_MILLIS, encoding);
 	}
 
 	public File takePicture(String name, Integer width, Integer height)
-			throws CameraException, CaptureFailedException, InterruptedException {
+			throws CaptureFailedException, InterruptedException {
 		return takePicture(name, width, height, DEFAULT_PICTURE_ENCODING);
 	}
 
 	public File takePicture(String name, Encoding encoding)
-			throws CameraException, CaptureFailedException, InterruptedException {
+			throws CaptureFailedException, InterruptedException {
 		return takePicture(name, DEFAULT_PICTURE_WIDTH, DEFAULT_PICTURE_HEIGHT, DEFAULT_PICTURE_QUALITY,
 				DEFAULT_PICTURE_TIMEOUT_IN_MILLIS, encoding);
 	}
 
-	public File takePicture(String name) throws CameraException, CaptureFailedException, InterruptedException {
+	public File takePicture(String name) throws CaptureFailedException, InterruptedException {
 		return takePicture(name, DEFAULT_PICTURE_ENCODING);
 	}
 
-	public File takePicture(Encoding encoding) throws CameraException, CaptureFailedException, InterruptedException {
+	public File takePicture(Encoding encoding) throws CaptureFailedException, InterruptedException {
 		return takePicture(DEFAULT_PICTURE_NAME, encoding);
 	}
 
-	public File takePicture() throws CameraException, CaptureFailedException, InterruptedException {
+	public File takePicture() throws CaptureFailedException, InterruptedException {
 		return takePicture(DEFAULT_PICTURE_ENCODING);
 	}
 
