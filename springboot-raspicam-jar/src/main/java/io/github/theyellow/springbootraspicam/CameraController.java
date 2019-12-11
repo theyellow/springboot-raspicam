@@ -153,13 +153,7 @@ public class CameraController {
 		return recordVideo(name, width, height, DEFAULT_LENGTH_IN_MILLIS);
 	}
 
-	// public File recordVideo(String name, Integer width, Integer height, Integer
-	// lengthInMillis) throws FailedToRunRaspistillException, IOException,
-	// InterruptedException {
-	// return recordVideo("video.mp4");
-	// }
-
-	public File takePicture() {
+	public File takePicture(String name, Integer width, Integer height, Integer quality) {
 
 		return null;
 	}
