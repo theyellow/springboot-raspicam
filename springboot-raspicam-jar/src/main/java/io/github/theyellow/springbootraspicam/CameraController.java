@@ -185,10 +185,11 @@ public class CameraController {
 					camera.close();
 				}
 			} catch (CameraException e) {
-				logger.error("Could not get camera for takePicture(...)", e);
+				logger.error("Could not get camera for takePicture(...), exception was thrown", e);
 			}
 			cameraUse.release();
-			logger.info("Shot photo '{}' with following parameters {}", picture, width, height, quality, encoding);
+			logger.info("Shot photo '{}' with following parameters: width {}, height {}, quality {} % and {}", picture,
+					width, height, quality, encoding);
 		} else {
 			logger.error("Could not acquire camera for taking picture within {} seconds, returning null", timeout);
 		}
